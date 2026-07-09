@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://soulhn.github.io/sitemap-index.xml

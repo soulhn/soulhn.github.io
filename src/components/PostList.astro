@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props { posts: CollectionEntry<'blog'>[]; }
+const { posts } = Astro.props;
+const catLabel: Record<string, string> = { build: '빌드', learning: '학습', hobby: '취미' };
+const fmt = (d: Date) =>
+  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+---
+<ul class="posts">
+  {posts.map(p => (
+    <li>
+      <a href={`/blog/${p.id}/`}>
+        <span class="meta"><time>{fmt(p.data.date)}</time><i class={`cat ${p.data.category}`}>{catLabel[p.data.category]}</i></span>
+        <b>{p.data.title}</b>
+        <p>{p.data.description}</p>
+      </a>
+    </li>
+  ))}
+</ul>
+{posts.length === 0 && <p class="empty">아직 글이 없습니다 — 곧 채워집니다.</p>}
+<style>
+  .posts { list-style: none; }
+  .posts li { border-top: 1px solid var(--line); }
+  .posts li:last-child { border-bottom: 1px solid var(--line); }
+  .posts a { display: block; padding: 22px 0; color: inherit; }
+  .posts a:hover { text-decoration: none; }
+  .posts a:hover b { color: var(--cyan); }
+  .meta { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; color: var(--faint); }
+  .cat { font-style: normal; font-weight: 600; padding: 1px 8px; border-radius: 6px; font-size: 11px; }
+  .cat.build { color: var(--cyan); background: rgba(14,124,156,.07); }
+  .cat.learning { color: var(--violet); background: rgba(91,70,196,.07); }
+  .cat.hobby { color: var(--green); background: rgba(11,125,84,.07); }
+  .posts b { display: block; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin: 6px 0 4px; }
+  .posts p { font-size: 14.5px; color: var(--sub); }
+  .empty { color: var(--faint); font-size: 14.5px; padding: 32px 0; }
+</style>

@@ -1,0 +1,16 @@
+{
+  "name": "soulhn.github.io",
+  "type": "module",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^5.0.0"
+  }
+}

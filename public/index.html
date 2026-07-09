@@ -100,7 +100,6 @@
     font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: .12em;
     color: var(--faint); text-transform: uppercase; margin-bottom: 8px;
   }
-  h2::before { content: "// "; color: var(--violet); }
   .section-lead { color: var(--sub); font-size: 15px; margin-bottom: 26px; max-width: 640px; }
   .section-lead b { color: var(--ink); }
 
@@ -200,11 +199,6 @@
   .log b { font-size: 15.5px; font-weight: 700; display: block; margin: 2px 0; }
   .log p { font-size: 14px; color: var(--sub); }
   .log .soon { font-family: var(--mono); font-size: 12px; color: var(--faint); font-style: italic; }
-  .log details { margin-top: 10px; }
-  .log summary { font-family: var(--mono); font-size: 12.5px; color: var(--cyan); cursor: pointer; }
-  .log summary:hover { text-decoration: underline; text-underline-offset: 3px; }
-  .log details p { margin-top: 9px; }
-  .log details b { color: var(--ink); }
   .log.todo b, .log.todo p { color: var(--faint); }
 
   footer {
@@ -318,7 +312,7 @@
     <h2>Build Log</h2>
     <p class="section-lead">
       실제 문제 하나를 AI와 해결하고, <b>무엇을 맡기고 무엇을 직접 판단했는지</b> 기록합니다.
-      부족한 역량은 이 루프에서 학습하고 <b>블로그·스레드로 발행</b>합니다.
+      부족한 역량은 이 루프에서 배우고 <b>블로그에 기록</b>합니다.
     </p>
     <div class="loop reveal">
       <div class="step"><small>01 FRAME</small><b>문제 정의</b><span class="arrow">▶</span></div>
@@ -329,31 +323,20 @@
     <div class="log">
       <span class="no">BUILD 01 — 2026.07</span>
       <b>리빙 포트폴리오 — soulhn.github.io <span class="tag">컨텍스트 엔지니어링</span></b>
-      <p>단일 HTML + 바닐라 JS, 프레임워크 없이 기획→빌드→배포.
-      상태 없는 정적 페이지에 프레임워크는 과잉이라 판단 — 인터랙티브 레이더까지 바닐라로.
-      콘텐츠는 미리 구조화해둔 커리어 데이터를 AI가 읽어 생성.</p>
-      <details>
-        <summary>빌드 리포트 열기</summary>
-        <p><b>문제</b> — 증거(대시보드·repo·블로그)가 흩어져 있어, 나를 3분 안에 파악할 단일 URL이 없었다.</p>
-        <p><b>AI에게 맡긴 것</b> — 코드 전량(레이더 SVG·인터랙션 포함), 콘텐츠 초안, 배포 자동화.</p>
-        <p><b>직접 판단한 것</b> — 콘셉트 전환(역량 지도·라이트 테마), 공개 범위와 표현의 수위, 범위 절단 — 방향 수정 약 20회.</p>
-        <p><b>검증</b> — 완료 기준 5개를 먼저 확정하고, 수정마다 실물 확인 + 전수 검사. 5/5 달성, 기획→배포 2시간 11분.</p>
-        <p><b>Q. 왜 프레임워크를 안 썼나</b> — 상태 없는 정적 페이지에 프레임워크는 과잉. 도구는 문제 크기에 맞게 고른다.</p>
-        <p><b>Q. AI가 다 한 것 아닌가</b> — 타이핑은 AI가 다 했다. 문제 정의, 완료 기준, 무엇을 공개하지 않을지, 그리고 20회의 방향 수정이 사람의 몫이었다.</p>
-        <p><a href="/blog/build-01-living-portfolio/">리포트 전문 →</a></p>
-      </details>
+      <p>단일 HTML + 바닐라 JS로 기획→빌드→배포.
+      콘텐츠는 미리 구조화해둔 커리어 데이터를 AI가 읽어 생성했습니다.</p>
+      <p class="soon"><a href="/blog/build-01-living-portfolio/">빌드 리포트 →</a></p>
     </div>
     <div class="log">
       <span class="no">BUILD 02 — 2026.07</span>
       <b>블로그 — <a href="/blog/">/blog</a> <span class="tag">Astro</span></b>
-      <p>글이 쌓일 집과 발행 파이프라인(md push → 자동 배포). 원페이지는 한 글자도 바뀌지 않고 그대로 — 달라진 것 0.
-      정적 한 장은 바닐라, 쌓이는 콘텐츠 시스템은 콘텐츠 도구 — 도구는 문제 크기에 맞게.</p>
+      <p>글이 쌓일 집과 자동 발행 파이프라인 — 글을 올리면 알아서 게시됩니다. 기존 원페이지는 그대로.</p>
       <p class="soon"><a href="/blog/build-02-blog/">빌드 리포트 →</a></p>
     </div>
     <div class="log todo">
       <span class="no">BUILD 03 — 예정</span>
       <b>RAG 실험 — 내 커리어 볼트에 질문하기</b>
-      <p>학습 중인 RAG 파이프라인의 첫 실전 — 과정은 블로그·스레드에 공개.</p>
+      <p>학습 중인 RAG 파이프라인의 첫 실전 — 과정은 블로그에 공개.</p>
     </div>
   </section>
 
@@ -450,7 +433,7 @@ const CAPS = [
       "학습 중: <b>RAG 파이프라인</b> · 에이전트 설계 패턴",
       "환경: 데이터 분석·AI 에이전트 과정 <b>현직 운영자</b>"
     ],
-    learn: "학습 과정을 <b>블로그·스레드에 공개 발행</b> — 첫 실험은 Build 03 (RAG)" },
+    learn: "학습 과정을 <b>블로그에 공개 발행</b> — 첫 실험은 Build 03 (RAG)" },
   { name: "교육·전파", level: 4, status: "proven", label: "검증됨",
     title: "교육 · AX 전파",
     desc: "혼자 잘 쓰는 것을 넘어 — 배우는 사람과 조직이 AI와 도구를 쓰게 만드는 능력입니다.",

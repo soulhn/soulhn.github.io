@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>황설현 — 교육사업 PM × AI 빌더</title>
+<meta name="description" content="데이터·AI로 교육 성과를 만드는 교육사업 PM. KDT 부트캠프 3년, 현 데이터 분석·AI 에이전트 과정 운영. 비개발 직군이 AI로 실제 업무 문제를 해결하는 기록.">
+<meta property="og:title" content="황설현 — 교육사업 PM × AI 빌더">
+<meta property="og:description" content="AI Native Capability Map — 검증된 역량은 증거로, 부족한 역량은 공개 학습으로.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://soulhn.github.io/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --surface-2: #f4f5f7;
+    --line: #e6e8ee;
+    --ink: #1b1f27;
+    --sub: #555d6b;
+    --faint: #6f7889;
+    --cyan: #0e7c9c;
+    --violet: #5b46c4;
+    --green: #0b7d54;
+    --amber: #8a5f06;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+      "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+    background:
+      radial-gradient(1200px 500px at 70% -10%, rgba(52,120,242,.06), transparent 60%),
+      radial-gradient(900px 420px at 10% 8%, rgba(109,79,212,.04), transparent 55%),
+      var(--bg);
+    color: var(--ink);
+    line-height: 1.72;
+    font-size: 16.5px;
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+  a { color: var(--cyan); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  ::selection { background: rgba(14,124,156,.18); }
+
+  /* ── Hero ── */
+  header { padding: 84px 0 48px; }
+  .kicker {
+    font-family: var(--mono); font-size: 13px; color: var(--cyan);
+    letter-spacing: .04em; margin-bottom: 16px;
+  }
+  h1 { font-size: clamp(32px, 6vw, 46px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+  .name-en { font-family: var(--mono); font-size: 13.5px; color: var(--faint); margin: 4px 0 22px; }
+  .typeline {
+    font-family: var(--mono); font-size: clamp(14px, 2.6vw, 16.5px);
+    color: var(--sub); min-height: 1.9em; margin-bottom: 18px;
+  }
+  .typeline .prompt { color: var(--violet); }
+  .typeline .caret {
+    display: inline-block; width: 8px; height: 1.05em; vertical-align: -2px;
+    background: var(--cyan); margin-left: 3px; animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .intro { color: var(--sub); max-width: 640px; font-size: 15.5px; }
+  .intro strong { color: var(--ink); font-weight: 700; }
+  .links { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .links a {
+    display: inline-block; padding: 8px 16px; border: 1px solid var(--line);
+    border-radius: 99px; background: var(--surface);
+    font-size: 13.5px; font-weight: 600; color: var(--ink);
+    transition: border-color .15s, color .15s, transform .15s;
+  }
+  .links a:hover { border-color: var(--cyan); color: var(--cyan); text-decoration: none; transform: translateY(-1px); }
+
+  /* ── Now strip ── */
+  .now {
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--mono); font-size: 12.5px; color: var(--sub);
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 12px 18px; margin-bottom: 84px;
+  }
+  .now .dot {
+    flex: none; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green); animation: ping 2.2s ease-out infinite;
+  }
+  @keyframes ping {
+    0% { box-shadow: 0 0 0 0 rgba(11,125,84,.35); }
+    70%, 100% { box-shadow: 0 0 0 9px rgba(11,125,84,0); }
+  }
+  .now b { color: var(--ink); font-weight: 600; }
+  .now .sep { color: var(--faint); }
+
+  /* ── Sections ── */
+  section { margin-bottom: 92px; }
+  h2 {
+    font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: .12em;
+    color: var(--faint); text-transform: uppercase; margin-bottom: 8px;
+  }
+  h2::before { content: "// "; color: var(--violet); }
+  .section-lead { color: var(--sub); font-size: 15px; margin-bottom: 26px; max-width: 640px; }
+  .section-lead b { color: var(--ink); }
+
+  /* ── Capability Map ── */
+  .map-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+  .radar-box { position: relative; }
+  .radar-hint {
+    text-align: center; font-family: var(--mono); font-size: 12px; color: var(--faint); margin-top: 6px;
+  }
+  svg text.axis-label {
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 12.5px; font-weight: 600; fill: var(--sub); cursor: pointer;
+  }
+  svg text.axis-label.active { fill: var(--cyan); }
+  svg .vertex { cursor: pointer; }
+  svg .vertex:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+  .legend { display: flex; justify-content: center; gap: 18px; margin-top: 8px; font-size: 12px; color: var(--sub); }
+  .legend i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .detail {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    padding: 24px; min-height: 320px;
+  }
+  .detail .status {
+    display: inline-block; font-family: var(--mono); font-size: 11.5px; font-weight: 600;
+    padding: 3px 10px; border-radius: 99px; margin-bottom: 12px;
+  }
+  .status.s-proven { color: var(--green); background: rgba(11,125,84,.07); border: 1px solid rgba(11,125,84,.3); }
+  .status.s-growing { color: var(--amber); background: rgba(138,95,6,.07); border: 1px solid rgba(138,95,6,.3); }
+  .status.s-learning { color: var(--violet); background: rgba(91,70,196,.07); border: 1px solid rgba(91,70,196,.3); }
+  .detail h3 { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
+  .lvl { display: flex; gap: 4px; margin: 10px 0 14px; }
+  .lvl i {
+    width: 26px; height: 5px; border-radius: 3px; background: var(--line);
+  }
+  .lvl i.on { background: linear-gradient(90deg, var(--cyan), var(--violet)); }
+  .detail p.desc { font-size: 14.5px; color: var(--sub); margin-bottom: 14px; }
+  .detail ul { list-style: none; }
+  .detail ul li {
+    font-size: 13.5px; color: var(--sub); padding: 7px 0 7px 18px; position: relative;
+    border-top: 1px dashed var(--line);
+  }
+  .detail ul li::before { content: "▸"; position: absolute; left: 2px; color: var(--cyan); font-size: 11px; top: 9px; }
+  .detail ul li b { color: var(--ink); font-weight: 600; }
+  .detail .learn-note {
+    margin-top: 14px; padding: 12px 14px; border-radius: 10px;
+    background: rgba(91,70,196,.05); border: 1px dashed rgba(91,70,196,.3);
+    font-size: 13px; color: var(--sub);
+  }
+  .detail .learn-note b { color: var(--violet); }
+
+  /* ── Loop ── */
+  .loop { display: flex; align-items: stretch; gap: 0; flex-wrap: wrap; margin-bottom: 26px; }
+  .loop .step {
+    flex: 1; min-width: 130px; background: var(--surface); border: 1px solid var(--line);
+    padding: 14px 16px; position: relative;
+  }
+  .loop .step:first-child { border-radius: 12px 0 0 12px; }
+  .loop .step:last-child { border-radius: 0 12px 12px 0; }
+  .loop .step + .step { border-left: none; }
+  .loop .step small { font-family: var(--mono); font-size: 10.5px; color: var(--faint); display: block; letter-spacing: .08em; }
+  .loop .step b { font-size: 14px; font-weight: 700; }
+  .loop .step .arrow {
+    position: absolute; right: -7px; top: 50%; transform: translateY(-50%);
+    color: var(--cyan); font-size: 12px; z-index: 2; animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: .35; } 50% { opacity: 1; } }
+
+  /* ── Projects ── */
+  .cards { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    padding: 24px; transition: border-color .2s, transform .2s;
+  }
+  .card:hover { border-color: #c9cfda; transform: translateY(-2px); }
+  .card h3 { font-size: 18px; font-weight: 700; }
+  .tag {
+    display: inline-block; font-family: var(--mono); font-size: 11px; font-weight: 600;
+    color: var(--cyan); background: rgba(14,124,156,.06); border: 1px solid rgba(14,124,156,.28);
+    border-radius: 6px; padding: 2px 8px; margin-left: 10px; vertical-align: 2px;
+  }
+  .card .desc { color: var(--sub); font-size: 14.5px; margin: 10px 0 12px; }
+  .card .desc strong { color: var(--ink); }
+  .meta { font-family: var(--mono); font-size: 12.5px; color: var(--faint); }
+  .meta a { font-weight: 600; }
+
+  /* ── Log ── */
+  .log {
+    border-left: 2px solid var(--line); margin-left: 8px; padding: 2px 0 2px 24px;
+    position: relative; margin-bottom: 26px;
+  }
+  .log::before {
+    content: ""; position: absolute; left: -7px; top: 8px; width: 12px; height: 12px;
+    border-radius: 50%; background: var(--bg); border: 2px solid var(--cyan);
+  }
+  .log.todo::before { border-color: var(--faint); }
+  .log .no { font-family: var(--mono); font-size: 11.5px; color: var(--faint); letter-spacing: .08em; }
+  .log b { font-size: 15.5px; font-weight: 700; display: block; margin: 2px 0; }
+  .log p { font-size: 14px; color: var(--sub); }
+  .log .soon { font-family: var(--mono); font-size: 12px; color: var(--faint); font-style: italic; }
+  .log.todo b, .log.todo p { color: var(--faint); }
+
+  footer {
+    border-top: 1px solid var(--line); padding: 28px 0 60px;
+    font-size: 13px; color: var(--faint);
+    display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: space-between;
+  }
+
+  /* reveal */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 760px) {
+    header { padding: 56px 0 36px; }
+    .stats { grid-template-columns: repeat(2, 1fr); margin-bottom: 64px; }
+    .map-grid { grid-template-columns: 1fr; }
+    section { margin-bottom: 72px; }
+    .loop .step .arrow { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .typeline .caret, .loop .step .arrow, .now .dot { animation: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <p class="kicker">EDUCATION PM × AI BUILDER</p>
+    <h1>황설현</h1>
+    <p class="name-en">Sulhyeon Hwang</p>
+    <p class="typeline"><span class="prompt">&gt;</span> <span id="type-target"></span><span class="caret"></span></p>
+    <p class="intro">
+      KDT IT 부트캠프를 3년간 함께했고, 지금은 AI 캠퍼스
+      <strong>데이터 분석·AI 에이전트 양성과정</strong>을 운영합니다.
+    </p>
+    <nav class="links">
+      <a href="https://github.com/soulhn" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://so-soul.tistory.com/" target="_blank" rel="noopener">Blog</a>
+      <!-- 링크드인 개설 후 주석 해제
+      <a href="#" target="_blank" rel="noopener">LinkedIn</a> -->
+    </nav>
+  </header>
+
+  <div class="now" role="note">
+    <span class="dot" aria-hidden="true"></span>
+    <span><b>NOW</b> 데이터 분석·AI 에이전트 과정 운영 <span class="sep">·</span>
+    <b>BUILD 01</b> 리빙 포트폴리오 <span class="sep">·</span>
+    <b>NEXT</b> 블로그 자동 발행 파이프라인</span>
+  </div>
+
+  <section id="capability">
+    <h2>AI Native Capability Map</h2>
+    <p class="section-lead">
+      역량을 파트별로 나눠 <b>정직하게</b> 표시합니다.
+      <span style="color:var(--green)">검증됨</span>은 작동하는 증거로,
+      <span style="color:var(--violet)">학습 중</span>은 공개 기록으로 연결됩니다.
+    </p>
+    <div class="map-grid">
+      <div class="radar-box">
+        <svg id="radar" viewBox="0 0 400 350" role="img" aria-label="역량 레이더 차트"></svg>
+        <p class="radar-hint">축을 눌러보세요 ↗</p>
+        <div class="legend">
+          <span><i style="background:#0b7d54"></i>검증됨</span>
+          <span><i style="background:#8a5f06"></i>성장 중</span>
+          <span><i style="background:#5b46c4"></i>학습 중</span>
+        </div>
+      </div>
+      <div class="detail" id="detail"></div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Built with AI</h2>
+    <div class="cards">
+      <article class="card reveal">
+        <h3>HRD-Net 성과분석 대시보드 <span class="tag">1인 기획·개발·배포</span></h3>
+        <p class="desc">
+          전국 KDT 공공데이터를 <strong>매일 자동 수집·분석</strong>하는 ETL 파이프라인과 실시간 성과 대시보드.
+          운영 중인 트랙을 '제품'처럼 개선하기 위해 직접 만들었고, 모집 시기·커리큘럼 개편의
+          <strong>의사결정 근거</strong>로 실제 운영에 사용했습니다.
+        </p>
+        <p class="meta">
+          Python · Streamlit · PostgreSQL · GitHub Actions ·
+          <a href="https://github.com/soulhn/2026data" target="_blank" rel="noopener">Repo</a> · 2026.01 ~
+        </p>
+      </article>
+      <article class="card reveal">
+        <h3>AITP — 사내 신규 LMS <span class="tag">기획 + 프론트엔드</span></h3>
+        <p class="desc">
+          캠퍼스별로 분산된 교육·운영 데이터를 통합하는 역량증명서 중심 LMS.
+          운영자로서 겪은 페인포인트를 요구사항으로 정의해 <strong>13개 도메인·200+ 화면</strong>을
+          기획하고, 프론트엔드를 AI 코딩으로 직접 개발했습니다. 3인 팀.
+        </p>
+        <p class="meta">React 19 · TypeScript · TanStack Query · Claude Code · Figma AI · 사내 시스템 (비공개) · 2026.03 ~</p>
+      </article>
+      <article class="card reveal">
+        <h3>kr-public-apis <span class="tag">오픈소스</span></h3>
+        <p class="desc">
+          한국 공공 API를 바로 써볼 수 있는 예제 모음. 공공데이터로 대시보드를 만들며
+          정리한 활용 패턴을 공개 저장소로 옮겼습니다.
+        </p>
+        <p class="meta">Python · <a href="https://github.com/soulhn/kr-public-apis" target="_blank" rel="noopener">Repo</a> · 2025.09~10</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="build-log">
+    <h2>Build Log</h2>
+    <p class="section-lead">
+      실제 문제 하나를 AI와 해결하고, <b>무엇을 맡기고 무엇을 직접 판단했는지</b> 기록합니다.
+      부족한 역량은 이 루프에서 학습하고 <b>블로그·스레드로 발행</b>합니다.
+    </p>
+    <div class="loop reveal">
+      <div class="step"><small>01 FRAME</small><b>문제 정의</b><span class="arrow">▶</span></div>
+      <div class="step"><small>02 STEER</small><b>AI 조종</b><span class="arrow">▶</span></div>
+      <div class="step"><small>03 SHIP</small><b>배포</b><span class="arrow">▶</span></div>
+      <div class="step"><small>04 REPORT</small><b>기록·발행</b></div>
+    </div>
+    <div class="log">
+      <span class="no">BUILD 01 — 2026.07</span>
+      <b>리빙 포트폴리오 — soulhn.github.io <span class="tag">컨텍스트 엔지니어링</span></b>
+      <p>단일 HTML + 바닐라 JS, 프레임워크 없이 기획→빌드→배포.
+      상태 없는 정적 페이지에 프레임워크는 과잉이라 판단 — 인터랙티브 레이더까지 바닐라로.
+      콘텐츠는 미리 구조화해둔 커리어 데이터를 AI가 읽어 생성.</p>
+      <p class="soon">빌드 리포트 게재 예정</p>
+    </div>
+    <div class="log todo">
+      <span class="no">BUILD 02 — 예정</span>
+      <b>블로그 자동 발행 파이프라인</b>
+      <p>Obsidian 볼트 → 마크다운 → git push → 자동 배포. 티스토리 수동 발행 대체.</p>
+    </div>
+    <div class="log todo">
+      <span class="no">BUILD 03 — 예정</span>
+      <b>RAG 실험 — 내 커리어 볼트에 질문하기</b>
+      <p>학습 중인 RAG 파이프라인의 첫 실전 — 과정은 블로그·스레드에 공개.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 황설현 · Sulhyeon Hwang</span>
+    <span>Built with Claude Code · <a href="https://github.com/soulhn/soulhn.github.io" target="_blank" rel="noopener">Source</a></span>
+  </footer>
+
+</div>
+
+<script>
+/* ── 1. Typing rotator ── */
+const PHRASES = [
+  "문제를 구조화합니다",
+  "AI를 조종해 실제로 만듭니다",
+  "만든 것을 배포하고 기록합니다",
+  "부족한 건 공개적으로 학습합니다"
+];
+(function type() {
+  const el = document.getElementById("type-target");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced) { el.textContent = PHRASES[0]; return; }
+  let pi = 0, ci = 0, deleting = false;
+  (function tick() {
+    const p = PHRASES[pi];
+    el.textContent = p.slice(0, ci);
+    let delay = deleting ? 28 : 64;
+    if (!deleting && ci === p.length) { delay = 1700; deleting = true; }
+    else if (deleting && ci === 0) { deleting = false; pi = (pi + 1) % PHRASES.length; delay = 350; }
+    ci += deleting ? -1 : 1;
+    setTimeout(tick, delay);
+  })();
+})();
+
+/* ── 2. Reveal on scroll ── */
+const ro = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add("in"); ro.unobserve(e.target); }
+}), { threshold: .15 });
+document.querySelectorAll(".reveal").forEach(el => ro.observe(el));
+
+/* ── 4. Capability radar ── */
+const CAPS = [
+  { name: "기획", level: 4, status: "proven", label: "검증됨",
+    title: "문제 정의 · 기획",
+    desc: "모호한 문제를 만들 것과 버릴 것으로 구조화하는 것 — 3년간 해온 일입니다.",
+    points: [
+      "<b>운영 체계 0→1 두 번</b> — BEYOND 캠프(25기 완주) → AI 캠퍼스(진행 중)",
+      "사내 LMS <b>13개 도메인 · 200+ 화면</b> 요구사항 정의·기획",
+      "입과 전 학습 격차 해소 — <b>사전 컨설팅 프로그램</b> 신규 기획·운영",
+      "흩어져 있던 경험·지식을 구조화해 모은 <b>리빙 포트폴리오</b> 기획"
+    ] },
+  { name: "데이터", level: 4, status: "proven", label: "검증됨",
+    title: "데이터 분석 · 엔지니어링",
+    desc: "공공데이터를 수집·적재·분석해 의사결정 근거로 만드는 파이프라인을 직접 운영했습니다.",
+    points: [
+      "KDT 공공데이터 <b>ETL 파이프라인</b> — GitHub Actions로 매일 자동 수집 (누적 수십만 건)",
+      "성과 대시보드 <b>1인 기획·개발·배포</b> — 운영 의사결정에 상시 사용",
+      "컴퓨터공학 전공 · 정보처리기사 · ADsP · SQLD · PostgreSQL"
+    ],
+    links: [{ label: "Repo", url: "https://github.com/soulhn/2026data" }] },
+  { name: "개발", level: 3, status: "growing", label: "성장 중",
+    title: "AI-assisted 개발",
+    desc: "비개발 직군이지만 AI를 동료 삼아 실제로 쓰이는 결과물을 만듭니다.",
+    points: [
+      "사내 LMS 프론트엔드 — <b>React 19 · TypeScript</b>, 200+ 화면",
+      "Streamlit 대시보드 · 업무 자동화 스크립트",
+      "리빙 포트폴리오 — 단일 HTML + 바닐라 JS, 프레임워크 없이"
+    ],
+    learn: "만들며 배운 것을 <b>Build Log</b>에 기록하며 반경을 넓히는 중" },
+  { name: "배포·운영", level: 3, status: "growing", label: "성장 중",
+    title: "Ship · 배포와 운영",
+    desc: "데모가 아니라 실제로 접속되는 상태로 완결합니다.",
+    points: [
+      "Streamlit Cloud 상시 운영 (성과 대시보드)",
+      "GitHub Actions — ETL 스케줄 자동화",
+      "GitHub Pages — 리빙 포트폴리오 배포"
+    ],
+    learn: "다음 목표: <b>자동 발행 파이프라인</b> (Build 02 예정)" },
+  { name: "AI Steering", level: 4, status: "proven", label: "검증됨",
+    title: "AI 활용 · Steering",
+    desc: "프롬프트가 아니라 완료 기준과 검증 루프를 설계해 AI에게 일을 맡깁니다.",
+    points: [
+      "반나절 걸리던 운영 보고를 <b>10분으로</b> — 파이프라인 자동화",
+      "Claude Code로 LMS 프론트·자동화 도구 실전 구축",
+      "LLM API 연동 — 대시보드 <b>AI 리포트 자동 생성</b>",
+      "커리어 데이터를 AI가 읽을 수 있게 구조화(<b>컨텍스트 엔지니어링</b>) — 지금 보는 이 페이지가 그 산출물"
+    ],
+    learn: "무엇을 맡기고 무엇을 직접 검증할지, <b>만들 때마다 기록</b>하며 다듬는 중" },
+  { name: "RAG·Agent", level: 2, status: "learning", label: "학습 중",
+    title: "AI 엔지니어링 · RAG · Agent",
+    desc: "가장 낮은 축을 숨기지 않습니다 — AI 에이전트 과정을 운영하며 커리큘럼과 함께 성장하는 축입니다.",
+    points: [
+      "보유: LLM API 연동 경험 (AI 리포트 자동 생성)",
+      "학습 중: <b>RAG 파이프라인</b> · 에이전트 설계 패턴",
+      "환경: 데이터 분석·AI 에이전트 과정 <b>현직 운영자</b>"
+    ],
+    learn: "학습 과정을 <b>블로그·스레드에 공개 발행</b> — 첫 실험은 Build 03 (RAG)" },
+  { name: "교육·전파", level: 4, status: "proven", label: "검증됨",
+    title: "교육 · AX 전파",
+    desc: "혼자 잘 쓰는 것을 넘어 — 배우는 사람과 조직이 AI와 도구를 쓰게 만드는 능력입니다.",
+    points: [
+      "IT 부트캠프 <b>3년 운영</b> → 현 데이터 분석·AI 에이전트 과정 운영",
+      "부트캠프 <b>수료생 출신 운영자</b> — 학습자가 어디서 막히는지 직접 겪은 사람",
+      "SW 기초 멘토링 · 스터디 리더 — <b>가르치며 배우는 루프</b>"
+    ] }
+];
+
+const svg = document.getElementById("radar");
+const CX = 200, CY = 176, R = 108, N = CAPS.length, MAXLV = 5;
+const pt = (i, r) => {
+  const a = -Math.PI / 2 + (i * 2 * Math.PI) / N;
+  return [CX + r * Math.cos(a), CY + r * Math.sin(a)];
+};
+let elems = `<defs>
+  <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#0e7c9c" stop-opacity=".20"/>
+    <stop offset="1" stop-color="#5b46c4" stop-opacity=".20"/>
+  </linearGradient>
+</defs>`;
+for (let lv = 1; lv <= MAXLV; lv++) {
+  const ring = Array.from({ length: N }, (_, i) => pt(i, (R * lv) / MAXLV).join(",")).join(" ");
+  elems += `<polygon points="${ring}" fill="none" stroke="#e0e3ea" stroke-width="1"/>`;
+}
+for (let i = 0; i < N; i++) {
+  const [x, y] = pt(i, R);
+  elems += `<line x1="${CX}" y1="${CY}" x2="${x}" y2="${y}" stroke="#e0e3ea" stroke-width="1"/>`;
+}
+const poly = CAPS.map((c, i) => pt(i, (R * c.level) / MAXLV).join(",")).join(" ");
+elems += `<polygon points="${poly}" fill="url(#rg)" stroke="#0e7c9c" stroke-width="1.5"/>`;
+CAPS.forEach((c, i) => {
+  const [lx, ly] = pt(i, R + 24);
+  const anchor = Math.abs(lx - CX) < 12 ? "middle" : lx > CX ? "start" : "end";
+  elems += `<text class="axis-label" data-i="${i}" x="${lx}" y="${ly + 4}" text-anchor="${anchor}">${c.name}</text>`;
+  const [vx, vy] = pt(i, (R * c.level) / MAXLV);
+  const col = c.status === "proven" ? "#0b7d54" : c.status === "growing" ? "#8a5f06" : "#5b46c4";
+  elems += `<circle class="dot" data-i="${i}" cx="${vx}" cy="${vy}" r="6" fill="${col}" stroke="#ffffff" stroke-width="2" pointer-events="none"/>`;
+  elems += `<circle class="vertex" data-i="${i}" cx="${vx}" cy="${vy}" r="16" fill="transparent" tabindex="0" role="button" aria-label="${c.name} — 레벨 ${c.level}/5, ${c.label}. 상세 보기"/>`;
+});
+svg.innerHTML = elems;
+
+const detail = document.getElementById("detail");
+function show(i, fromUser) {
+  const c = CAPS[i];
+  const sClass = { proven: "s-proven", growing: "s-growing", learning: "s-learning" }[c.status];
+  detail.innerHTML = `
+    <span class="status ${sClass}">● ${c.label}</span>
+    <h3>${c.title}</h3>
+    <div class="lvl">${Array.from({ length: MAXLV }, (_, k) => `<i class="${k < c.level ? "on" : ""}"></i>`).join("")}</div>
+    <p class="desc">${c.desc}</p>
+    <ul>${c.points.map(p => `<li>${p}</li>`).join("")}</ul>
+    ${c.links ? `<ul>${c.links.map(l => `<li><a href="${l.url}" target="_blank" rel="noopener">${l.label} ↗</a></li>`).join("")}</ul>` : ""}
+    ${c.learn ? `<div class="learn-note"><b>Learning in Public</b> — ${c.learn}</div>` : ""}`;
+  svg.querySelectorAll(".axis-label").forEach(t => t.classList.toggle("active", +t.dataset.i === i));
+  svg.querySelectorAll(".dot").forEach(v => v.setAttribute("r", +v.dataset.i === i ? 8 : 6));
+  if (fromUser && matchMedia("(max-width: 760px)").matches) {
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    detail.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "nearest" });
+  }
+}
+svg.addEventListener("click", e => {
+  const t = e.target.closest("[data-i]");
+  if (t) show(+t.dataset.i, true);
+});
+svg.addEventListener("keydown", e => {
+  const t = e.target.closest(".vertex");
+  if (t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); show(+t.dataset.i, true); }
+});
+show(5); /* 첫 화면: 가장 낮은 축 — 정직함이 첫인상 */
+</script>
+
+</body>
+</html>

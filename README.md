@@ -8,7 +8,7 @@ src/content/blog/      글 원고 — md 추가가 곧 발행
 .github/workflows/     push → 자동 빌드·배포
 ```
 
-**빌드 리포트** → [Build 01 — 리빙 포트폴리오](https://soulhn.github.io/blog/build-01-living-portfolio/) · [Build 02 — 블로그와 발행 파이프라인](https://soulhn.github.io/blog/build-02-blog/)
+**빌드 리포트** → [soulhn.github.io/blog](https://soulhn.github.io/blog/)
 
 ---
 

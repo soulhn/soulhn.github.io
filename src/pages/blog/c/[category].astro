@@ -10,7 +10,7 @@ export async function getStaticPaths() {
 const { category } = Astro.params;
 const label = { build: '빌드 로그', learning: '학습 로그', hobby: '취미' }[category!];
 const posts = (await getCollection('blog', p => p.data.category === category)).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf() || b.id.localeCompare(a.id)
 );
 ---
 <Blog title={`${label} — Log`} description={`${label} 글 모음`} active={category}>

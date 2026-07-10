@@ -248,8 +248,8 @@
   <div class="now" role="note">
     <span class="dot" aria-hidden="true"></span>
     <span><b>NOW</b> 데이터 분석·AI 에이전트 과정 운영 <span class="sep">·</span>
-    <b>BUILD 02</b> 블로그 개설 <span class="sep">·</span>
-    <b>NEXT</b> RAG 실험</span>
+    <b>BUILD 03</b> ask-soulhn <span class="sep">·</span>
+    <b>NEXT</b> 그래프 뷰</span>
   </div>
 
   <section id="capability">
@@ -333,10 +333,17 @@
       <p>글이 쌓일 집과 자동 발행 파이프라인 — 글을 올리면 알아서 게시됩니다. 기존 원페이지는 그대로.</p>
       <p class="soon"><a href="/blog/build-02-blog/">빌드 리포트 →</a></p>
     </div>
+    <div class="log">
+      <span class="no">BUILD 03 — 2026.07</span>
+      <b>ask-soulhn — 내 공개 기록에 질문하기 <span class="tag">RAG</span></b>
+      <p>검색·임베딩·환각 가드를 직접 조립한 질문-답변 파이프라인.
+      역량 지도의 '학습 중' 축에 생긴 첫 실증.</p>
+      <p class="soon"><a href="/blog/build-03-rag/">빌드 리포트 →</a></p>
+    </div>
     <div class="log todo">
-      <span class="no">BUILD 03 — 예정</span>
-      <b>RAG 실험 — 내 커리어 볼트에 질문하기</b>
-      <p>학습 중인 RAG 파이프라인의 첫 실전 — 과정은 블로그에 공개.</p>
+      <span class="no">BUILD 04 — 예정</span>
+      <b>그래프 뷰 — 글과 기록의 지도</b>
+      <p>글·태그의 연결을 실데이터로 그리는 탐색 화면.</p>
     </div>
   </section>
 
@@ -429,11 +436,13 @@ const CAPS = [
     title: "AI 엔지니어링 · RAG · Agent",
     desc: "가장 낮은 축을 숨기지 않습니다 — AI 에이전트 과정을 운영하며 커리큘럼과 함께 성장하는 축입니다.",
     points: [
+      "<b>RAG 파이프라인 직접 조립</b> — ask-soulhn (검색·임베딩·환각 가드)",
       "보유: LLM API 연동 경험 (AI 리포트 자동 생성)",
-      "학습 중: <b>RAG 파이프라인</b> · 에이전트 설계 패턴",
+      "학습 중: 에이전트 설계 패턴",
       "환경: 데이터 분석·AI 에이전트 과정 <b>현직 운영자</b>"
     ],
-    learn: "학습 과정을 <b>블로그에 공개 발행</b> — 첫 실험은 Build 03 (RAG)" },
+    links: [{ label: "ask-soulhn Repo", url: "https://github.com/soulhn/ask-soulhn" }],
+    learn: "학습 과정을 <b>블로그에 공개 발행</b> — Build 03 리포트가 첫 기록" },
   { name: "교육·전파", level: 4, status: "proven", label: "검증됨",
     title: "교육 · AX 전파",
     desc: "혼자 잘 쓰는 것을 넘어 — 배우는 사람과 조직이 AI와 도구를 쓰게 만드는 능력입니다.",

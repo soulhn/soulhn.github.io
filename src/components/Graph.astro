@@ -1,0 +1,202 @@
+---
+import { getCollection } from 'astro:content';
+
+// 빌드 타임에 전 글을 파싱해 지도 데이터를 만든다 — 새 글이 오면 지도도 자동 갱신.
+const posts = await getCollection('blog');
+const ids = new Set(posts.map(p => p.id));
+
+const nodes = posts.map(p => ({
+  id: p.id,
+  label: p.data.title.split(' — ')[0],
+  cat: p.data.category,
+  url: `/blog/${p.id}/`,
+}));
+
+const edgeMap = new Map<string, { a: string; b: string; kind: string }>();
+function addEdge(a: string, b: string, kind: 'link' | 'tag') {
+  if (a === b) return;
+  const key = [a, b].sort().join('|');
+  const prev = edgeMap.get(key);
+  if (!prev || (prev.kind === 'tag' && kind === 'link')) {
+    const [x, y] = [a, b].sort();
+    edgeMap.set(key, { a: x, b: y, kind });
+  }
+}
+for (const p of posts) {
+  for (const m of (p.body ?? '').matchAll(/\]\(\/blog\/([^)#/]+)\/?[^)]*\)/g)) {
+    if (ids.has(m[1])) addEdge(p.id, m[1], 'link');
+  }
+}
+for (let i = 0; i < posts.length; i++) {
+  for (let j = i + 1; j < posts.length; j++) {
+    if (posts[i].data.tags.some(t => posts[j].data.tags.includes(t))) {
+      addEdge(posts[i].id, posts[j].id, 'tag');
+    }
+  }
+}
+const graph = { nodes, edges: [...edgeMap.values()] };
+---
+<div class="graph-box">
+  <canvas id="graph" aria-label="글 연결 지도 — 노드는 글, 선은 링크와 공유 태그"></canvas>
+</div>
+<div class="graph-foot">
+  <div class="graph-legend">
+    <span><i style="background:#0e7c9c"></i>빌드</span>
+    <span><i style="background:#5b46c4"></i>학습</span>
+    <span><i style="background:#0b7d54"></i>취미</span>
+    <span><i class="line solid"></i>링크</span>
+    <span><i class="line dashed"></i>태그</span>
+  </div>
+  <p class="graph-hint">누르면 이동 · 끌 수 있어요</p>
+</div>
+
+<style>
+  .graph-box {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    overflow: hidden;
+  }
+  canvas { display: block; width: 100%; touch-action: none; }
+  .graph-foot {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+    gap: 8px 16px; margin: 10px 2px 34px;
+  }
+  .graph-legend { display: flex; flex-wrap: wrap; gap: 10px 14px; font-size: 12px; color: var(--sub); }
+  .graph-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+  .graph-legend i.line { width: 16px; height: 0; border-radius: 0; border-top: 2px solid #aab2c0; vertical-align: 2px; }
+  .graph-legend i.line.dashed { border-top-style: dashed; }
+  .graph-hint { font-family: var(--mono); font-size: 11.5px; color: var(--faint); }
+</style>
+
+<script is:inline define:vars={{ graph }}>
+  const COLORS = { build: "#0e7c9c", learning: "#5b46c4", hobby: "#0b7d54" };
+  const canvas = document.getElementById("graph");
+  const ctx = canvas.getContext("2d");
+
+  const nodes = graph.nodes.map(n => ({ ...n, x: 0, y: 0, vx: 0, vy: 0, cr: 0 }));
+  const byId = Object.fromEntries(nodes.map(n => [n.id, n]));
+  const edges = graph.edges.map(e => ({ ...e, an: byId[e.a], bn: byId[e.b] }));
+  const deg = {}, nb = {};
+  for (const e of edges) {
+    deg[e.a] = (deg[e.a] || 0) + 1; deg[e.b] = (deg[e.b] || 0) + 1;
+    (nb[e.a] = nb[e.a] || new Set()).add(e.b);
+    (nb[e.b] = nb[e.b] || new Set()).add(e.a);
+  }
+  nodes.forEach(n => { n.r = 7 + Math.min(deg[n.id] || 0, 8) * 1.6; n.cr = n.r; });
+
+  let W = 0, H = 0, dpr = 1;
+  function resize() {
+    W = canvas.parentElement.clientWidth;
+    H = Math.min(460, Math.max(320, Math.round(W * 0.62)));
+    dpr = window.devicePixelRatio || 1;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.height = H + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  addEventListener("resize", resize);
+
+  nodes.forEach((n, i) => {
+    const a = (i / nodes.length) * Math.PI * 2;
+    n.x = W / 2 + Math.cos(a) * 40;
+    n.y = H / 2 + Math.sin(a) * 40;
+  });
+
+  let dragging = null, moved = 0, hover = null;
+  const isNear = n => hover && (n === hover || nb[hover.id]?.has(n.id));
+
+  function tick() {
+    for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
+      const a = nodes[i], b = nodes[j];
+      let dx = b.x - a.x, dy = b.y - a.y;
+      let d2 = dx * dx + dy * dy || 1;
+      const f = 2600 / d2, d = Math.sqrt(d2);
+      dx /= d; dy /= d;
+      a.vx -= dx * f; a.vy -= dy * f;
+      b.vx += dx * f; b.vy += dy * f;
+    }
+    for (const e of edges) {
+      const rest = e.kind === "link" ? 92 : 145;
+      const k = e.kind === "link" ? 0.03 : 0.008;
+      let dx = e.bn.x - e.an.x, dy = e.bn.y - e.an.y;
+      const d = Math.sqrt(dx * dx + dy * dy) || 1;
+      const f = (d - rest) * k;
+      dx /= d; dy /= d;
+      e.an.vx += dx * f; e.an.vy += dy * f;
+      e.bn.vx -= dx * f; e.bn.vy -= dy * f;
+    }
+    for (const n of nodes) {
+      n.vx += (W / 2 - n.x) * 0.012;
+      n.vy += (H / 2 - n.y) * 0.012;
+      if (n !== dragging) {
+        n.vx *= 0.82; n.vy *= 0.82;
+        n.x += n.vx; n.y += n.vy;
+      }
+      n.x = Math.max(26, Math.min(W - 26, n.x));
+      n.y = Math.max(26, Math.min(H - 32, n.y));
+      const target = n === hover ? n.r * 1.35 : n.r;
+      n.cr += (target - n.cr) * 0.2;
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    // 배경 도트 그리드
+    ctx.fillStyle = "rgba(27,31,39,.045)";
+    for (let gx = 14; gx < W; gx += 26) for (let gy = 14; gy < H; gy += 26) {
+      ctx.fillRect(gx, gy, 1.6, 1.6);
+    }
+    for (const e of edges) {
+      const on = hover && (e.an === hover || e.bn === hover);
+      ctx.globalAlpha = hover ? (on ? 1 : 0.12) : 1;
+      ctx.beginPath();
+      ctx.setLineDash(e.kind === "tag" ? [4, 5] : []);
+      ctx.strokeStyle = on ? COLORS[hover.cat] : (e.kind === "tag" ? "rgba(150,158,172,.45)" : "#c3cad6");
+      ctx.lineWidth = on ? 2 : (e.kind === "tag" ? 1 : 1.6);
+      ctx.moveTo(e.an.x, e.an.y); ctx.lineTo(e.bn.x, e.bn.y); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+    ctx.textAlign = "center";
+    for (const n of nodes) {
+      const focus = !hover || isNear(n);
+      ctx.globalAlpha = focus ? 1 : 0.22;
+      if (n === hover) { ctx.shadowColor = COLORS[n.cat]; ctx.shadowBlur = 18; }
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.cr, 0, Math.PI * 2);
+      ctx.fillStyle = COLORS[n.cat] || "#8b93a1";
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "#ffffff";
+      ctx.stroke();
+      ctx.font = (n === hover ? "600 " : "") + "12px 'Pretendard Variable', Pretendard, sans-serif";
+      ctx.fillStyle = focus ? "#3d4450" : "#8b93a1";
+      ctx.fillText(n.label, n.x, n.y + n.cr + 14);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  (function loop() { tick(); draw(); requestAnimationFrame(loop); })();
+
+  function pick(x, y) {
+    return nodes.find(n => (n.x - x) ** 2 + (n.y - y) ** 2 < (n.cr + 10) ** 2) || null;
+  }
+  function pos(ev) {
+    const r = canvas.getBoundingClientRect();
+    return [ev.clientX - r.left, ev.clientY - r.top];
+  }
+  canvas.addEventListener("pointerdown", ev => {
+    const [x, y] = pos(ev);
+    dragging = pick(x, y); moved = 0;
+    if (dragging) canvas.setPointerCapture(ev.pointerId);
+  });
+  canvas.addEventListener("pointermove", ev => {
+    const [x, y] = pos(ev);
+    if (dragging) { dragging.x = x; dragging.y = y; moved++; }
+    else { hover = pick(x, y); canvas.style.cursor = hover ? "pointer" : "default"; }
+  });
+  canvas.addEventListener("pointerup", () => {
+    if (dragging && moved < 4) location.href = dragging.url;
+    dragging = null;
+  });
+  canvas.addEventListener("pointerleave", () => { hover = null; });
+</script>

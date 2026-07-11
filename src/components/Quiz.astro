@@ -1,0 +1,69 @@
+---
+interface Q { question: string; choices: string[]; answer: number; explain: string; }
+interface Props { quiz: Q[]; }
+const { quiz } = Astro.props;
+---
+<section class="quiz" id="quiz">
+  <h2>퀴즈</h2>
+  <p class="quiz-lead">읽은 내용, 세 문제로 확인해보세요.</p>
+  {quiz.map((q, qi) => (
+    <div class="q" data-answer={q.answer}>
+      <p class="q-text">{qi + 1}. {q.question}</p>
+      <div class="choices">
+        {q.choices.map((c, ci) => (
+          <button type="button" data-i={ci}>{c}</button>
+        ))}
+      </div>
+      <p class="explain" hidden>{q.explain}</p>
+    </div>
+  ))}
+  <p class="score" hidden></p>
+</section>
+
+<style>
+  .quiz { margin-top: 56px; border-top: 1px solid var(--line); padding-top: 28px; }
+  .quiz h2 { font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: .12em; color: var(--faint); text-transform: uppercase; }
+  .quiz-lead { font-size: 14.5px; color: var(--sub); margin: 6px 0 20px; }
+  .q { margin-bottom: 26px; }
+  .q-text { font-size: 15.5px; font-weight: 600; margin-bottom: 10px; }
+  .choices { display: grid; gap: 8px; }
+  .choices button {
+    text-align: left; font-size: 14.5px; font-family: inherit; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 14px; cursor: pointer; transition: border-color .15s;
+    word-break: keep-all;
+  }
+  .choices button:hover:not(:disabled) { border-color: var(--cyan); }
+  .choices button:disabled { cursor: default; opacity: .55; }
+  .choices button.correct { border-color: var(--green); background: rgba(11,125,84,.06); opacity: 1; font-weight: 600; }
+  .choices button.wrong { border-color: #b3423f; background: rgba(179,66,63,.06); opacity: 1; }
+  .explain { font-size: 13.5px; color: var(--sub); margin-top: 10px; padding: 10px 14px; background: var(--surface); border-left: 3px solid var(--cyan); border-radius: 0 8px 8px 0; }
+  .score { font-family: var(--mono); font-size: 14px; color: var(--ink); font-weight: 600; margin-top: 8px; }
+</style>
+
+<script is:inline>
+  (() => {
+    const root = document.getElementById("quiz");
+    const questions = [...root.querySelectorAll(".q")];
+    let solved = 0, correct = 0;
+    for (const q of questions) {
+      const answer = +q.dataset.answer;
+      const buttons = [...q.querySelectorAll("button")];
+      for (const btn of buttons) {
+        btn.addEventListener("click", () => {
+          const picked = +btn.dataset.i;
+          buttons.forEach(b => { b.disabled = true; });
+          buttons[answer].classList.add("correct");
+          if (picked !== answer) btn.classList.add("wrong");
+          else correct++;
+          q.querySelector(".explain").hidden = false;
+          if (++solved === questions.length) {
+            const s = root.querySelector(".score");
+            s.textContent = `${questions.length}문제 중 ${correct}개 정답${correct === questions.length ? " — 완벽 🎉" : ""}`;
+            s.hidden = false;
+          }
+        });
+      }
+    }
+  })();
+</script>

@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Blog from '../../layouts/Blog.astro';
+import Quiz from '../../components/Quiz.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -9,6 +10,10 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+// 검수 후 커밋된 퀴즈만 렌더 — JSON이 없으면 퀴즈 섹션도 없다 (옵트인)
+const quizFiles = import.meta.glob<{ default: any }>('../../data/quiz/*.json', { eager: true });
+const quizData = quizFiles[`../../data/quiz/${post.id}.json`]?.default ?? null;
 const catLabel = { build: '빌드 로그', learning: '학습 로그', hobby: '취미' }[post.data.category];
 const fmt = (d: Date) =>
   `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
@@ -26,6 +31,7 @@ const fmt = (d: Date) =>
     <div class="prose">
       <Content />
     </div>
+    {quizData && <Quiz quiz={quizData} />}
   </article>
 </Blog>
 

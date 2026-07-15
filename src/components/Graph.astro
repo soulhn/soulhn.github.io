@@ -27,9 +27,12 @@ for (const p of posts) {
     if (ids.has(m[1])) addEdge(p.id, m[1], 'link');
   }
 }
+// 시리즈 태그는 점선을 만들지 않는다 — 노드 색(카테고리)이 이미 담는 정보라
+// 카드가 늘수록 전원끼리 이어져(n², 11장=55쌍) 지도를 덮는다. 점선은 구체 주제 공유만.
+const SERIES_TAGS = new Set(['용어', '빌드리포트']);
 for (let i = 0; i < posts.length; i++) {
   for (let j = i + 1; j < posts.length; j++) {
-    if (posts[i].data.tags.some(t => posts[j].data.tags.includes(t))) {
+    if (posts[i].data.tags.some(t => !SERIES_TAGS.has(t) && posts[j].data.tags.includes(t))) {
       addEdge(posts[i].id, posts[j].id, 'tag');
     }
   }
@@ -77,11 +80,14 @@ const graph = { nodes, edges: [...edgeMap.values()] };
   const edges = graph.edges.map(e => ({ ...e, an: byId[e.a], bn: byId[e.b] }));
   const deg = {}, nb = {};
   for (const e of edges) {
-    deg[e.a] = (deg[e.a] || 0) + 1; deg[e.b] = (deg[e.b] || 0) + 1;
+    // 크기 신호는 실선(인용) 위주 — 점선(태그 공유)은 카드가 늘수록 전원에게 붙어서
+    // 그대로 세면 모든 노드가 상한에 걸려 최대 크기로 균일해진다.
+    const w = e.kind === "link" ? 1 : 0.2;
+    deg[e.a] = (deg[e.a] || 0) + w; deg[e.b] = (deg[e.b] || 0) + w;
     (nb[e.a] = nb[e.a] || new Set()).add(e.b);
     (nb[e.b] = nb[e.b] || new Set()).add(e.a);
   }
-  nodes.forEach(n => { n.r = 7 + Math.min(deg[n.id] || 0, 8) * 1.6; n.cr = n.r; });
+  nodes.forEach(n => { n.r = 5.5 + Math.min(deg[n.id] || 0, 9) * 1.1; n.cr = n.r; });
 
   let W = 0, H = 0, dpr = 1;
   function resize() {

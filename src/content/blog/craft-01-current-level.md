@@ -2,7 +2,7 @@
 title: "AI 활용 로그 01 — 현재 수준 스냅샷: 클로드 CLI와 옵시디언"
 description: "AI를 더 잘 쓰는 사람이 되려고 이 블로그를 시작했는데, 정작 '어떻게 쓰는지'의 기록이 없었다. 시리즈의 첫 화는 현재 수준의 정직한 스냅샷."
 date: 2026-07-31
-category: learning
+category: craft
 tags: [AI활용로그, 페어코딩, 컨텍스트엔지니어링]
 ---
 

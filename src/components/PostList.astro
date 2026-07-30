@@ -2,7 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 interface Props { posts: CollectionEntry<'blog'>[]; }
 const { posts } = Astro.props;
-const catLabel: Record<string, string> = { build: '빌드', learning: '학습', hobby: '취미' };
+const catLabel: Record<string, string> = { build: '빌드', learning: '학습', craft: 'AI 활용', hobby: '취미' };
 const fmt = (d: Date) =>
   `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 ---
@@ -29,6 +29,7 @@ const fmt = (d: Date) =>
   .cat { font-style: normal; font-weight: 600; padding: 1px 8px; border-radius: 6px; font-size: 11px; }
   .cat.build { color: var(--cyan); background: rgba(14,124,156,.07); }
   .cat.learning { color: var(--violet); background: rgba(91,70,196,.07); }
+  .cat.craft { color: #b45309; background: rgba(180,83,9,.08); }
   .cat.hobby { color: var(--green); background: rgba(11,125,84,.07); }
   .posts b { display: block; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin: 6px 0 4px; }
   .posts p { font-size: 14.5px; color: var(--sub); }

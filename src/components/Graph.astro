@@ -46,6 +46,7 @@ const graph = { nodes, edges: [...edgeMap.values()] };
   <div class="graph-legend">
     <span><i style="background:#0e7c9c"></i>빌드</span>
     <span><i style="background:#5b46c4"></i>학습</span>
+    <span><i style="background:#b45309"></i>AI 활용</span>
     <span><i style="background:#0b7d54"></i>취미</span>
     <span><i class="line solid"></i>링크</span>
     <span><i class="line dashed"></i>태그</span>
@@ -71,7 +72,7 @@ const graph = { nodes, edges: [...edgeMap.values()] };
 </style>
 
 <script is:inline define:vars={{ graph }}>
-  const COLORS = { build: "#0e7c9c", learning: "#5b46c4", hobby: "#0b7d54" };
+  const COLORS = { build: "#0e7c9c", learning: "#5b46c4", craft: "#b45309", hobby: "#0b7d54" };
   const canvas = document.getElementById("graph");
   const ctx = canvas.getContext("2d");
 

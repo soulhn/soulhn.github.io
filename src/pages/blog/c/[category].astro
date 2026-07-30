@@ -4,11 +4,11 @@ import Blog from '../../../layouts/Blog.astro';
 import PostList from '../../../components/PostList.astro';
 
 export async function getStaticPaths() {
-  return ['build', 'learning', 'hobby'].map(category => ({ params: { category } }));
+  return ['build', 'learning', 'craft', 'hobby'].map(category => ({ params: { category } }));
 }
 
 const { category } = Astro.params;
-const label = { build: '빌드 로그', learning: '학습 로그', hobby: '취미' }[category!];
+const label = { build: '빌드 로그', learning: '학습 로그', craft: 'AI 활용', hobby: '취미' }[category!];
 const posts = (await getCollection('blog', p => p.data.category === category)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf() || b.id.localeCompare(a.id)
 );

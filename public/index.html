@@ -251,8 +251,8 @@
   <div class="now" role="note">
     <span class="dot" aria-hidden="true"></span>
     <span><b>NOW</b> 데이터 분석·AI 에이전트 과정 운영 <span class="sep">·</span>
-    <b>BUILD 05</b> 확인 퀴즈 <span class="sep">·</span>
-    <b>NEXT</b> 스레드 자동 발행</span>
+    <b>NEW</b> AI 활용 로그 시작 <span class="sep">·</span>
+    <b>NEXT</b> 세션 마감 루틴 스킬</span>
   </div>
 
   <section id="capability">
@@ -325,8 +325,9 @@
     </div>
     <div class="log todo">
       <span class="no">BUILD 06 — 예정</span>
-      <b>스레드 자동 발행</b>
-      <p>새 글이 올라오면 요약 초안을 만들어 승인 후 스레드에 발행하는 파이프라인.</p>
+      <b>세션 마감 루틴 — AI 활용 로그 자동화 <span class="tag">스킬</span></b>
+      <p>AI 세션이 끝나면 배운 것을 로그 초안으로 정리하는 커스텀 스킬.
+      스레드 자동 발행은 블로그가 자리 잡은 뒤로 보류.</p>
     </div>
     <div class="log">
       <span class="no">BUILD 05 — 2026.07</span>
@@ -416,9 +417,11 @@ const CAPS = [
     points: [
       "KDT 공공데이터 <b>ETL 파이프라인</b> — GitHub Actions로 매일 자동 수집 (누적 수십만 건)",
       "성과 대시보드 <b>1인 기획·개발·배포</b> — 운영 의사결정에 상시 사용",
+      "사내 AI 경연(AI Learn X) — <b>1회차 9위/63</b> · 2회차는 채점 구조를 해독해 하루 만에 F1 0.28→0.69",
       "컴퓨터공학 전공 · 정보처리기사 · ADsP · SQLD · PostgreSQL"
     ],
-    links: [{ label: "Repo", url: "https://github.com/soulhn/2026data" }] },
+    links: [{ label: "Repo", url: "https://github.com/soulhn/2026data" },
+            { label: "경연 기록", url: "/blog/oneday-competition-leaderboard/" }] },
   { name: "개발", level: 3, status: "growing", label: "성장 중",
     title: "AI-assisted 개발",
     desc: "비개발 직군이지만 AI를 동료 삼아 실제로 쓰이는 결과물을 만듭니다.",
@@ -436,7 +439,7 @@ const CAPS = [
       "GitHub Actions — ETL 스케줄 자동화",
       "GitHub Pages — 리빙 포트폴리오 배포"
     ],
-    learn: "다음 목표: <b>자동 발행 파이프라인</b> (Build 02 예정)" },
+    learn: "자동 발행은 Build 02로 완료 — 다음: <b>반복 작업의 스킬화</b>와 스케줄 자동화" },
   { name: "AI Steering", level: 4, status: "proven", label: "검증됨",
     title: "AI 활용 · Steering",
     desc: "프롬프트가 아니라 완료 기준과 검증 루프를 설계해 AI에게 일을 맡깁니다.",
@@ -446,7 +449,8 @@ const CAPS = [
       "LLM API 연동 — 대시보드 <b>AI 리포트 자동 생성</b>",
       "커리어 데이터를 AI가 읽을 수 있게 구조화(<b>컨텍스트 엔지니어링</b>) — 지금 보는 이 페이지가 그 산출물"
     ],
-    learn: "무엇을 맡기고 무엇을 직접 검증할지, <b>만들 때마다 기록</b>하며 다듬는 중" },
+    learn: "무엇을 맡기고 무엇을 직접 검증할지 — <b>AI 활용 로그</b> 시리즈로 기록 시작",
+    links: [{ label: "AI 활용 로그", url: "/blog/c/craft/" }] },
   { name: "RAG·Agent", level: 2, status: "learning", label: "학습 중",
     title: "AI 엔지니어링 · RAG · Agent",
     desc: "가장 낮은 축을 숨기지 않습니다 — AI 에이전트 과정을 운영하며 커리큘럼과 함께 성장하는 축입니다.",
